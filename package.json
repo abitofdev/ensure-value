@@ -1,0 +1,27 @@
+{
+  "name": "type-protector",
+  "version": "1.0.0",
+  "description": "A simple lightweight typescript library for protecting typed values.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abitofdev/type-protector.git"
+  },
+  "keywords": [
+    "typescript",
+    "type",
+    "protector",
+    "guard",
+    "validation"
+  ],
+  "author": "Ashley Canham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abitofdev/type-protector/issues"
+  },
+  "homepage": "https://github.com/abitofdev/type-protector#readme"
+}
