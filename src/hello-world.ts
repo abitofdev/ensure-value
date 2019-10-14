@@ -1,3 +1,7 @@
-export function helloWorld() {
-    console.log('hi')
+
+export class HelloWorld {
+
+    public greet(): string {
+        return 'hi';
+    }
 }
