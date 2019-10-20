@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,8 @@
     "jasmine": "^3.5.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
-  }
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }
