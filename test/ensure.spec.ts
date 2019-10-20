@@ -2,9 +2,12 @@
 
 describe('test', () => {
 
+        it('should throw string empty', () => {
+            expect(() => testString(null)).toThrowError('test must not be null.');
+        });
+
     [null, '', ' '].forEach(val => {
         it('should throw string empty', () => {
-            testObject({name: null});
             expect(() => testString(val)).toThrowError();
         })
     });
@@ -13,6 +16,10 @@ describe('test', () => {
         it('should throw', () => {
             expect(() => testNumber(val)).toThrowError();
         })
+    });
+
+    it('object test', () => {
+        expect(() => testObject({name: null})).toThrowError();
     });
 });
 

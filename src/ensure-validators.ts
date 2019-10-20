@@ -1,7 +1,7 @@
 import { EnsuredValue } from './ensure';
 
 declare module './ensure' {
-    interface EnsuredValue<T> {
+    export interface EnsuredValue<T> {
         /**
          * Ensures that the value is not null or undefined.
          * @param this The value to evaluate.
@@ -30,7 +30,7 @@ declare module './ensure' {
  * @param this The value to evaluate.
  * @throws When the provided value is null or undefined.
  */
-function notNull<T>(this: EnsuredValue<T>): EnsuredValue<T> {
+export function notNull<T>(this: EnsuredValue<T>): EnsuredValue<T> {
     if (!this || !this.value) {
         throw new Error(`${this.name} must not be null.`);
     }
@@ -43,7 +43,7 @@ function notNull<T>(this: EnsuredValue<T>): EnsuredValue<T> {
  * @param this The value to evaluate.
  * @throws When the provided value is null, empty or whitespace.
  */
-function notNullOrWhitespace(this: EnsuredValue<string>): EnsuredValue<string> {
+export function notNullOrWhitespace(this: EnsuredValue<string>): EnsuredValue<string> {
     this.notNull();
 
     if (!this.value.trim()) {
@@ -58,7 +58,7 @@ function notNullOrWhitespace(this: EnsuredValue<string>): EnsuredValue<string> {
  * @param this The value to evaluate.
  * @param threshold The threshold of which the ensured value must be greater than.
  */
-function greaterThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
+export function greaterThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
     this.notNull();
 
     // Handle threshold could be null
