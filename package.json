@@ -1,7 +1,7 @@
 {
   "name": "type-protector",
   "version": "1.0.0",
-  "description": "A simple lightweight typescript library for protecting typed values.",
+  "description": "A simple lightweight typescript library for ensuring typed values.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
