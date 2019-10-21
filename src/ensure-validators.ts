@@ -1,4 +1,4 @@
-import { EnsuredValue } from './ensure';
+import { EnsuredValue, ensure } from './ensure';
 
 declare module './ensure' {
     export interface EnsuredValue<T> {
@@ -22,6 +22,13 @@ declare module './ensure' {
          * @param threshold The threshold of which the ensured value must be greater than.
          */
         greaterThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
+
+        /**
+         * Ensures that the value is not null and is less than the provided threshold.
+         * @param this The value to evaluate.
+         * @param threshold The threshold of which the ensured value must be less than.
+         */
+        lessThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
     }
 }
 
@@ -59,11 +66,27 @@ export function notNullOrWhitespace(this: EnsuredValue<string>): EnsuredValue<st
  * @param threshold The threshold of which the ensured value must be greater than.
  */
 export function greaterThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
+    ensure(() => threshold).notNull();
     this.notNull();
 
-    // Handle threshold could be null
     if (this.value <= threshold) {
-        throw new Error(`value must be greater than ${threshold}`);
+        throw new Error(`${this.name} must be greater than ${threshold}`);
+    }
+
+    return this;
+}
+
+/**
+ * Ensures that the value is not null and is less than the provided threshold.
+ * @param this The value to evaluate.
+ * @param threshold The threshold of which the ensured value must be less than.
+ */
+export function lessThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
+    ensure(() => threshold).notNull();
+    this.notNull();
+
+    if (this.value >= threshold) {
+        throw new Error(`${this.name} must be less than ${threshold}`);
     }
 
     return this;
@@ -72,3 +95,4 @@ export function greaterThan(this: EnsuredValue<number>, threshold: number): Ensu
 EnsuredValue.prototype.notNull = notNull;
 EnsuredValue.prototype.notNullOrWhitespace = notNullOrWhitespace;
 EnsuredValue.prototype.greaterThan = greaterThan;
+EnsuredValue.prototype.lessThan = lessThan;
