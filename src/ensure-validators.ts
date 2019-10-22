@@ -29,6 +29,18 @@ declare module './ensure' {
          * @param threshold The threshold of which the ensured value must be less than.
          */
         lessThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
+
+        /**
+         * Ensures that the value is not null and is true.
+         * @param this The value to evaluate.
+         */
+        isTrue(this: EnsuredValue<boolean>): EnsuredValue<boolean>;
+
+        /**
+         * Ensures that the value is not null and is false.
+         * @param this The value to evaluate.
+         */
+        isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean>;
     }
 }
 
@@ -38,7 +50,7 @@ declare module './ensure' {
  * @throws When the provided value is null or undefined.
  */
 export function notNull<T>(this: EnsuredValue<T>): EnsuredValue<T> {
-    if (!this || !this.value) {
+    if (!this || this.value === null || this.value === undefined) {
         throw new Error(`${this.name} must not be null.`);
     }
 
@@ -92,7 +104,37 @@ export function lessThan(this: EnsuredValue<number>, threshold: number): Ensured
     return this;
 }
 
+/**
+ * Ensures that the value is not null and is true.
+ * @param this The value to evaluate.
+ */
+export function isTrue(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
+    this.notNull();
+
+    if(this.value !== true) {
+        throw new Error(`${this.name} must be true.`);
+    }
+
+    return this;
+}
+
+/**
+ * Ensures that the value is not null and is false.
+ * @param this The value to evaluate.
+ */
+export function isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
+    this.notNull();
+
+    if(this.value !== false) {
+        throw new Error(`${this.name} must be false.`);
+    }
+
+    return this;
+}
+
 EnsuredValue.prototype.notNull = notNull;
 EnsuredValue.prototype.notNullOrWhitespace = notNullOrWhitespace;
 EnsuredValue.prototype.greaterThan = greaterThan;
 EnsuredValue.prototype.lessThan = lessThan;
+EnsuredValue.prototype.isTrue = isTrue;
+EnsuredValue.prototype.isFalse = isFalse;

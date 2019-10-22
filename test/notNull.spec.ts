@@ -38,6 +38,10 @@ describe('Ensure notNull', () => {
             expect(() => ensure(() => testData).notNull).not.toThrowError();
         });
 
+        it('empty array', () => {
+            expect(() => ensure(() => []).notNull).not.toThrowError();
+        });
+
         it('nested empty string', () => {
             const testData = {name: ''}
             expect(() => ensure(() => testData.name).notNull).not.toThrowError();
@@ -51,6 +55,11 @@ describe('Ensure notNull', () => {
         it('nested empty object', () => {
             const testData = {emptyObject: {}}
             expect(() => ensure(() => testData.emptyObject).notNull).not.toThrowError();
+        });
+
+        it('nested empty array', () => {
+            const testData = {emptyArray: []}
+            expect(() => ensure(() => testData.emptyArray).notNull).not.toThrowError();
         });
     });
     
