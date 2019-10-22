@@ -46,5 +46,13 @@ describe('Ensure notNullOrWhitespace', () => {
                     .not.toThrowError();
             })
         });
+
+        ['test', '  .', '.  '].forEach(testData => {
+            it(`nested valid string: ${testData}`, () => {
+                const nested = {value: testData}
+                expect(() => ensure(() => nested.value).notNullOrWhitespace())
+                    .not.toThrowError();
+            })
+        });
     });
 })
