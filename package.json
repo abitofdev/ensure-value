@@ -6,8 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
-    "build": "tsc",
-    "build:watch": "tsc -w"
+    "build": "tsc -t ES5",
+    "build:watch": "tsc -w -t ES5"
   },
   "repository": {
     "type": "git",
