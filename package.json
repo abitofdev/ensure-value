@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abitofdev/type-protector.git"
+    "url": "git+https://github.com/abitofdev/ensure-value.git"
   },
   "keywords": [
     "ensure",
@@ -24,14 +24,14 @@
     "protector",
     "guard",
     "validation",
-    "typescript"  
+    "typescript"
   ],
   "author": "Ashley Canham",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/abitofdev/type-protector/issues"
+    "url": "https://github.com/abitofdev/ensure-value/issues"
   },
-  "homepage": "https://github.com/abitofdev/type-protector#readme",
+  "homepage": "https://github.com/abitofdev/ensure-value#readme",
   "devDependencies": {
     "@types/jasmine": "^3.4.4",
     "jasmine": "^3.5.0",
