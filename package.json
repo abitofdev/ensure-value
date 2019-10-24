@@ -1,24 +1,30 @@
 {
-  "name": "type-protector",
+  "name": "ensure-value",
   "version": "1.0.0",
-  "description": "A simple lightweight typescript library for ensuring typed values.",
+  "description": "A simple lightweight library for ensuring typed values.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
     "build": "tsc -t ES5",
-    "build:watch": "tsc -w -t ES5"
+    "build:watch": "tsc -w -t ES5",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags",
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abitofdev/type-protector.git"
   },
   "keywords": [
-    "typescript",
+    "ensure",
+    "value",
     "type",
     "protector",
     "guard",
-    "validation"
+    "validation",
+    "typescript"  
   ],
   "author": "Ashley Canham",
   "license": "MIT",
