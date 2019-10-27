@@ -33,12 +33,17 @@ export class EnsuredValue<T> {
     }
 
     private getName(valueFunc: () => T): string {
-        var match = /return (.*);/g.exec(valueFunc.toString());
+        var funcRegex = /(return (.*);)|(\(\)\s?=>(.*))/g.exec(valueFunc.toString());
 
-        if (match == null) {
+        if (funcRegex == null) {
+            throw new Error('The function provided was not in a valid format.');
+        }
+        const match = funcRegex.reverse().find(m => !!m);
+
+        if (!match) {
             throw new Error('The function does not return a variable name.');
         }
 
-        return match[1];
+        return match.trim();
     }
 }
