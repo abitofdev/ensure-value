@@ -57,7 +57,7 @@ We get the following error in the console: `Error: name must not be empty or whi
 
 ### Ensurer Chaining
 
-Multiple ensurers can be chained together to produce completex object validation sequences. 
+Multiple ensurers can be chained together to produce complex object validation sequences. 
 
 > Chains are executed in the order that they are defined and will not execute further checks if the current one fails.
 
