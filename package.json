@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
-    "build": "tsc && npx babel ./src --extensions '.ts' -d dist",
+    "build": "tsc && npx babel ./src --extensions .ts -d dist",
     "build:watch": "tsc -w",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",

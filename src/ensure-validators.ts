@@ -41,6 +41,13 @@ declare module './ensure' {
          * @param this The value to evaluate.
          */
         isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean>;
+
+        /**
+         * Ensures that the provided condition is met.
+         * @param this The value to evaluate.
+         * @param predicate The condition function to invoke with the ensured value.
+         */
+        condition(this: EnsuredValue<T>, predicate: (value: T) => boolean): EnsuredValue<T>;
     }
 }
 
@@ -111,7 +118,7 @@ export function lessThan(this: EnsuredValue<number>, threshold: number): Ensured
 export function isTrue(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
     this.notNull();
 
-    if(this.value !== true) {
+    if (this.value !== true) {
         throw new Error(`${this.name} must be true.`);
     }
 
@@ -125,8 +132,23 @@ export function isTrue(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
 export function isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
     this.notNull();
 
-    if(this.value !== false) {
+    if (this.value !== false) {
         throw new Error(`${this.name} must be false.`);
+    }
+
+    return this;
+}
+
+/**
+ * Ensures that the provided condition is met.
+ * @param this The value to evaluate.
+ * @param predicate The condition function to invoke with the ensured value.
+ */
+export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boolean): EnsuredValue<T> {
+    ensure(() => predicate).notNull();
+
+    if (!predicate(this.value)) {
+        throw new Error(`${this.name} did not meet predicate condition.`);
     }
 
     return this;
@@ -138,3 +160,4 @@ EnsuredValue.prototype.greaterThan = greaterThan;
 EnsuredValue.prototype.lessThan = lessThan;
 EnsuredValue.prototype.isTrue = isTrue;
 EnsuredValue.prototype.isFalse = isFalse;
+EnsuredValue.prototype.condition = condition;

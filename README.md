@@ -14,7 +14,7 @@ npm i ensure-value
 
 ## Usage
 
-ensure-value aims to make function protection as simple as possible through the use of **validation chaining**. The library provides a collection of simple, independent and autonomous data validators for various data types which can be chained together to ensure data correctness and validity. [_See the validators section for a full list_.](#Validators)
+ensure-value aims to make function protection as simple as possible through the use of **validation chaining**. The library provides a collection of simple, independent and autonomous data validators for various data types which can be chained together to ensure data correctness and validity. [_See the validators section for a full list_.](#validators)
 
 ### How it works
 
@@ -55,6 +55,23 @@ We get the following error in the console: `Error: name must not be empty or whi
 
 `Success!! Test User is valid!`. Our user has been created and we can be sure that the Person object contains valid data.
 
+### Ensurer Chaining
+
+Multiple ensurers can be chained together to produce completex object validation sequences. 
+
+> Chains are executed in the order that they are defined and will not execute further checks if the current one fails.
+
+```ts
+const person = {name: 'John Doe', age: 36};
+
+ensure(() => person)
+  .notNull()
+  .condition((p) => p.name.indexOf('John') > -1)
+  .condition((p) => p.age > 21 && p.age % 2 === 0);
+
+```
+
+
 ### Validators
 
 The table below documents all currently available validators.
@@ -63,10 +80,11 @@ Validator | Data Type | Description
 --------- | --------- | -----------
 `notNull()` | any | Ensures that the value is not null or undefined.
 `notNullOrWhitespace()` | string | Ensures that the value is not null, empty or whitespace.
-`greaterThan(threshold)` | number | Ensures that the value is not null and is greater than the provided threshold.
-`lessThan(threshold)` | number | Ensures that the value is not null and is less than the provided threshold.
+`greaterThan(threshold: number)` | number | Ensures that the value is not null and is greater than the provided threshold.
+`lessThan(threshold: number)` | number | Ensures that the value is not null and is less than the provided threshold.
 `isTrue()` | boolean | Ensures that the value is not null and is true.
 `isFalse()` | boolean | Ensures that the value is not null and is false.
+`condition(predicate: (value: T) => boolean)` | any | Ensures that the provided condition is met.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
