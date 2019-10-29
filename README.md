@@ -85,6 +85,7 @@ Validator | Data Type | Description
 `isTrue()` | boolean | Ensures that the value is not null and is true.
 `isFalse()` | boolean | Ensures that the value is not null and is false.
 `condition(predicate: (value: T) => boolean)` | any | Ensures that the provided condition is met.
+`hasItems()` | any[] | Ensures that the provided array contains at least one item.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

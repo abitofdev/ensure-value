@@ -48,6 +48,12 @@ declare module './ensure' {
          * @param predicate The condition function to invoke with the ensured value.
          */
         condition(this: EnsuredValue<T>, predicate: (value: T) => boolean): EnsuredValue<T>;
+
+        /**
+         * Ensures that the provided array contains at least one item.
+         * @param this The value to evaluate.
+         */
+        hasItems<T extends any[]>(this: EnsuredValue<T>): EnsuredValue<T>;
     }
 }
 
@@ -154,6 +160,20 @@ export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boo
     return this;
 }
 
+/**
+ * Ensures that the provided array contains at least one item.
+ * @param this The value to evaluate.
+ */
+export function hasItems<T extends any[]>(this: EnsuredValue<T>): EnsuredValue<T> {
+    this.notNull();
+    
+    if(this.value.length === 0) {
+        throw new Error(`${this.name} must contain at least one item.`);
+    }
+
+    return this;
+}
+
 EnsuredValue.prototype.notNull = notNull;
 EnsuredValue.prototype.notNullOrWhitespace = notNullOrWhitespace;
 EnsuredValue.prototype.greaterThan = greaterThan;
@@ -161,3 +181,4 @@ EnsuredValue.prototype.lessThan = lessThan;
 EnsuredValue.prototype.isTrue = isTrue;
 EnsuredValue.prototype.isFalse = isFalse;
 EnsuredValue.prototype.condition = condition;
+EnsuredValue.prototype.hasItems = hasItems;
