@@ -5,6 +5,16 @@
 
 A simple lightweight library to make protecting function input values simpler and more convenient. The library is primarily aimed at improving the quality and resilience of code by performing trivial checks to ensure data validity and correctness. 
 
+* [Installation](#installation)
+* [Usage](#usage)
+  * [How it works](#how-it-works)
+  * [Simple example](#simple-example)
+  * [Chaining](#ensurer-chaining)
+* [Validators](#validators)
+* [Contributing](#contributing)
+* [License](#license)
+
+
 ## Installation
 
 Install the latest version of the package through [NPM](https://www.npmjs.com/package/ensure-value):
@@ -86,6 +96,8 @@ Validator | Data Type | Description
 `isFalse()` | boolean | Ensures that the value is not null and is false.
 `condition(predicate: (value: T) => boolean)` | any | Ensures that the provided condition is met.
 `hasItems()` | any[] | Ensures that the provided array contains at least one item.
+`all(ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>)` | any[] |  Ensures that all items in the provided array pass the specified ensurer chain.
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

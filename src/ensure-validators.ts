@@ -54,8 +54,22 @@ declare module './ensure' {
          * @param this The value to evaluate.
          */
         hasItems<T extends any[]>(this: EnsuredValue<T>): EnsuredValue<T>;
+
+        /**
+         * Ensures that all items in the provided array pass the specified ensurer chain.
+         * @param this The value to evaluate.
+         * @param validate The ensurer chain to execute for each item in the provided array.
+         */
+        all<T extends any[]>(this: EnsuredValue<T>,
+            ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>): EnsuredValue<T>;
     }
 }
+
+/**
+ * Gets the type for a single element of T[] or any if no type could be inferred.
+ * (e.g. The returned type for input `string[]` would be `string`)
+ */
+type InferredType<T> = T extends (infer U)[] ? U : any;
 
 /**
  * Ensures that the value is not null or undefined.
@@ -166,10 +180,27 @@ export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boo
  */
 export function hasItems<T extends any[]>(this: EnsuredValue<T>): EnsuredValue<T> {
     this.notNull();
-    
-    if(this.value.length === 0) {
+
+    if (this.value.length === 0) {
         throw new Error(`${this.name} must contain at least one item.`);
     }
+
+    return this;
+}
+
+/**
+ * Ensures that all items in the provided array pass the specified ensurer chain.
+ * @param this The value to evaluate.
+ * @param validate The ensurer chain to execute for each item in the provided array.
+ */
+export function all<T extends any[]>(this: EnsuredValue<T>,
+    ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>): EnsuredValue<T> {
+    this.hasItems();
+    ensure(() => ensurerChain).notNull();
+
+    this.value.forEach((item) => {
+        ensurerChain(new EnsuredValue(() => item));
+    });
 
     return this;
 }
@@ -182,3 +213,4 @@ EnsuredValue.prototype.isTrue = isTrue;
 EnsuredValue.prototype.isFalse = isFalse;
 EnsuredValue.prototype.condition = condition;
 EnsuredValue.prototype.hasItems = hasItems;
+EnsuredValue.prototype.all = all;

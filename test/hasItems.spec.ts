@@ -1,7 +1,7 @@
 import { ensure } from "../dist";
 
 const nullErrorMessageRegex = /must not be null/;
-const greaterThanErrorMessageRegex = /must contain at least one item/;
+const hasItemsErrorMessageRegex = /must contain at least one item/;
 
 describe('Ensure hasItems', () => {
 
@@ -17,7 +17,7 @@ describe('Ensure hasItems', () => {
         it('empty array', () => {
             const testData = [];
             expect(() => ensure(() => testData).hasItems())
-                .toThrowError(greaterThanErrorMessageRegex);
+                .toThrowError(hasItemsErrorMessageRegex);
         });
     });
 
