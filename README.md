@@ -94,7 +94,7 @@ Validator | Data Type | Description
 `lessThan(threshold: number)` | number | Ensures that the value is not null and is less than the provided threshold.
 `isTrue()` | boolean | Ensures that the value is not null and is true.
 `isFalse()` | boolean | Ensures that the value is not null and is false.
-`condition(predicate: (value: T) => boolean)` | any | Ensures that the provided condition is met.
+`condition(predicate: (value: T) => boolean, message: string)` | any | Ensures that the provided condition is met. An optional message can be provided to override the default.
 `hasItems()` | any[] | Ensures that the provided array contains at least one item.
 `all(ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>)` | any[] |  Ensures that all items in the provided array pass the specified ensurer chain.
 

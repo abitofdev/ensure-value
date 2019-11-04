@@ -1,4 +1,4 @@
-import { ensure, notNull } from "../dist";
+import { ensure } from "../dist";
 
 const nullErrorMessageRegex = /must not be null/;
 const conditionErrorMessageRegex = /did not meet predicate condition/
@@ -22,6 +22,21 @@ describe('Ensure condition', () => {
                 .toThrowError(conditionErrorMessageRegex);
         });
 
+        it('unmet condition with empty custom message', () => {
+            const testData = 10;
+
+            expect(() => ensure(() => testData)
+                .condition((value) => value > 20, ''))
+                .toThrowError(conditionErrorMessageRegex);
+        });
+
+        it('unmet condition with custom message', () => {
+            const testData = 10;
+
+            expect(() => ensure(() => testData)
+                .condition((value) => value > 20, 'must be greater than 20.'))
+                .toThrowError('testData must be greater than 20.');
+        });
     });
 
     describe('should not throw on', () => {

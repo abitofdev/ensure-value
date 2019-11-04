@@ -46,8 +46,9 @@ declare module './ensure' {
          * Ensures that the provided condition is met.
          * @param this The value to evaluate.
          * @param predicate The condition function to invoke with the ensured value.
+         * @param message A custom error message to use instead of the default. 
          */
-        condition(this: EnsuredValue<T>, predicate: (value: T) => boolean): EnsuredValue<T>;
+        condition(this: EnsuredValue<T>, predicate: (value: T) => boolean, message?: string): EnsuredValue<T>;
 
         /**
          * Ensures that the provided array contains at least one item.
@@ -163,11 +164,17 @@ export function isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
  * Ensures that the provided condition is met.
  * @param this The value to evaluate.
  * @param predicate The condition function to invoke with the ensured value.
+ * @param message A custom error message to use instead of the default.
  */
-export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boolean): EnsuredValue<T> {
+export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boolean,
+ message?: string): EnsuredValue<T> {
     ensure(() => predicate).notNull();
 
     if (!predicate(this.value)) {
+        if(message && !!message.trim()) {
+            throw new Error(`${this.name} ${message}`);
+        }
+
         throw new Error(`${this.name} did not meet predicate condition.`);
     }
 
