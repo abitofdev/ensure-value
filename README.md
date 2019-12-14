@@ -24,7 +24,7 @@ npm i ensure-value
 
 ## Usage
 
-ensure-value aims to make function protection as simple as possible through the use of **validation chaining**. The library provides a collection of simple, independent and autonomous data validators for various data types which can be chained together to ensure data correctness and validity. [_See the validators section for a full list_.](#validators)
+ensure-value aims to make function protection as simple as possible through the use of **validation chaining**. The library provides a collection of simple data validators for various data types which can be chained together to ensure data correctness and validity. [_See the validators section for a full list_.](#validators)
 
 ### How it works
 
@@ -97,6 +97,7 @@ Validator | Data Type | Description
 `condition(predicate: (value: T) => boolean, message: string)` | any | Ensures that the provided condition is met. An optional message can be provided to override the default.
 `hasItems()` | any[] | Ensures that the provided array contains at least one item.
 `all(ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>)` | any[] |  Ensures that all items in the provided array pass the specified ensurer chain.
+`hasProperty<T extends object, K extends keyof T>(this: EnsuredValue<T>, property: K): EnsuredValue<T>` | any | Ensurers that the provided value contains a specific property.
 
 
 ## Contributing

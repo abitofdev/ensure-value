@@ -63,6 +63,13 @@ declare module './ensure' {
          */
         all<T extends any[]>(this: EnsuredValue<T>,
             ensurerChain: (value: EnsuredValue<InferredType<T>>) => EnsuredValue<InferredType<T>>): EnsuredValue<T>;
+
+        /**
+         * Ensurers that the provided value contains a specific property.
+         * @param this The value to evaluate
+         * @param property The name of the property that should exist on the value.
+         */
+        hasProperty<T extends object, K extends keyof T>(this: EnsuredValue<T>, property: K): EnsuredValue<T>
     }
 }
 
@@ -79,7 +86,7 @@ type InferredType<T> = T extends (infer U)[] ? U : any;
  */
 export function notNull<T>(this: EnsuredValue<T>): EnsuredValue<T> {
     if (!this || this.value === null || this.value === undefined) {
-        throw new Error(`${this.name} must not be null.`);
+        throw new Error(`${this.name} must not be null or undefined.`);
     }
 
     return this;
@@ -167,11 +174,11 @@ export function isFalse(this: EnsuredValue<boolean>): EnsuredValue<boolean> {
  * @param message A custom error message to use instead of the default.
  */
 export function condition<T>(this: EnsuredValue<T>, predicate: (value: T) => boolean,
- message?: string): EnsuredValue<T> {
+    message?: string): EnsuredValue<T> {
     ensure(() => predicate).notNull();
 
     if (!predicate(this.value)) {
-        if(message && !!message.trim()) {
+        if (message && !!message.trim()) {
             throw new Error(`${this.name} ${message}`);
         }
 
@@ -212,6 +219,22 @@ export function all<T extends any[]>(this: EnsuredValue<T>,
     return this;
 }
 
+/**
+ * Ensurers that the provided value contains a specific property.
+ * @param this The value to evaluate
+ * @param property The name of the property that should exist on the value.
+ */
+export function hasProperty<T extends object, K extends keyof T>(this: EnsuredValue<T>, property: K): EnsuredValue<T> {
+    this.notNull();
+    ensure(() => property as string).notNullOrWhitespace();
+
+    if (!this.value.hasOwnProperty(property)) {
+        throw new Error(`${this.name} must have a property called '${property}'.`);
+    }
+
+    return this;
+}
+
 EnsuredValue.prototype.notNull = notNull;
 EnsuredValue.prototype.notNullOrWhitespace = notNullOrWhitespace;
 EnsuredValue.prototype.greaterThan = greaterThan;
@@ -221,3 +244,4 @@ EnsuredValue.prototype.isFalse = isFalse;
 EnsuredValue.prototype.condition = condition;
 EnsuredValue.prototype.hasItems = hasItems;
 EnsuredValue.prototype.all = all;
+EnsuredValue.prototype.hasProperty = hasProperty;

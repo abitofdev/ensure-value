@@ -1,6 +1,6 @@
 import { ensure } from "../dist";
 
-const errorMessageRegex = /must not be null/;
+const errorMessageRegex = /must not be null or undefined/;
 
 describe('Ensure notNull', () => {
 
