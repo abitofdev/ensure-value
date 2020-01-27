@@ -91,7 +91,9 @@ Validator | Data Type | Description
 `notNull()` | any | Ensures that the value is not null or undefined.
 `notNullOrWhitespace()` | string | Ensures that the value is not null, empty or whitespace.
 `greaterThan(threshold: number)` | number | Ensures that the value is not null and is greater than the provided threshold.
+`greaterThanOrEquals(threshold: number)` | number | Ensures that the value is not null and is greater than or equal to the provided threshold.
 `lessThan(threshold: number)` | number | Ensures that the value is not null and is less than the provided threshold.
+`lessThanOrEquals(threshold: number)` | number | Ensures that the value is not null and is less than or equal to the provided threshold.
 `isTrue()` | boolean | Ensures that the value is not null and is true.
 `isFalse()` | boolean | Ensures that the value is not null and is false.
 `condition(predicate: (value: T) => boolean, message: string)` | any | Ensures that the provided condition is met. An optional message can be provided to override the default.

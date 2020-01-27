@@ -24,11 +24,25 @@ declare module './ensure' {
         greaterThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
 
         /**
+         * Ensures that the value is not null and is greater than or equal to the provided threshold.
+         * @param this The value to evaluate.
+         * @param threshold The threshold of which the ensured value must be greater than or equal to.
+         */
+        greaterThanOrEquals(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
+
+        /**
          * Ensures that the value is not null and is less than the provided threshold.
          * @param this The value to evaluate.
          * @param threshold The threshold of which the ensured value must be less than.
          */
         lessThan(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
+
+        /**
+         * Ensures that the value is not null and is less than or equal to the the provided threshold.
+         * @param this The value to evaluate.
+         * @param threshold The threshold of which the ensured value must be less than or equal to.
+         */
+        lessThanOrEquals(this: EnsuredValue<number>, threshold: number): EnsuredValue<number>;
 
         /**
          * Ensures that the value is not null and is true.
@@ -124,6 +138,22 @@ export function greaterThan(this: EnsuredValue<number>, threshold: number): Ensu
 }
 
 /**
+ * Ensures that the value is not null and is greater than or equal to the provided threshold.
+ * @param this The value to evaluate.
+ * @param threshold The threshold of which the ensured value must be greater than or equal to.
+ */
+export function greaterThanOrEquals(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
+    ensure(() => threshold).notNull();
+    this.notNull();
+
+    if (this.value < threshold) {
+        throw new Error(`${this.name} must be greater than or equal to ${threshold}`);
+    }
+
+    return this;
+}
+
+/**
  * Ensures that the value is not null and is less than the provided threshold.
  * @param this The value to evaluate.
  * @param threshold The threshold of which the ensured value must be less than.
@@ -134,6 +164,22 @@ export function lessThan(this: EnsuredValue<number>, threshold: number): Ensured
 
     if (this.value >= threshold) {
         throw new Error(`${this.name} must be less than ${threshold}`);
+    }
+
+    return this;
+}
+
+/**
+ * Ensures that the value is not null and is less than or equal to the the provided threshold.
+ * @param this The value to evaluate.
+ * @param threshold The threshold of which the ensured value must be less than or equal to.
+ */
+export function lessThanOrEquals(this: EnsuredValue<number>, threshold: number): EnsuredValue<number> {
+    ensure(() => threshold).notNull();
+    this.notNull();
+
+    if (this.value > threshold) {
+        throw new Error(`${this.name} must be less than or equal to ${threshold}`);
     }
 
     return this;
@@ -238,7 +284,9 @@ export function hasProperty<T extends object, K extends keyof T>(this: EnsuredVa
 EnsuredValue.prototype.notNull = notNull;
 EnsuredValue.prototype.notNullOrWhitespace = notNullOrWhitespace;
 EnsuredValue.prototype.greaterThan = greaterThan;
+EnsuredValue.prototype.greaterThanOrEquals = greaterThanOrEquals;
 EnsuredValue.prototype.lessThan = lessThan;
+EnsuredValue.prototype.lessThanOrEquals = lessThanOrEquals;
 EnsuredValue.prototype.isTrue = isTrue;
 EnsuredValue.prototype.isFalse = isFalse;
 EnsuredValue.prototype.condition = condition;
